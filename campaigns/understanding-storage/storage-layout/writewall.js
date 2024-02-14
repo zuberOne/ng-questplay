@@ -15,7 +15,7 @@ let walletAddressBytes32 = [];
 
 
 // Function to calculate the slot of a nested mapping
-function calculateNestedMappingSlot(key1, key2, slotOfFirstMapping) {
+function calculateNestedMappingSlot(firstKey, secondKey, mappingSlot) {
   // Convert key1 and slotOfFirstMapping to 32 bytes hex strings
   const key1Hex = ethers.utils.hexZeroPad(ethers.utils.hexlify(firstKey), 32);
   const slotHex = ethers.utils.hexZeroPad(ethers.utils.hexlify(mappingSlot), 32);
@@ -31,7 +31,7 @@ function calculateNestedMappingSlot(key1, key2, slotOfFirstMapping) {
 
 
 async function main() {
-
+  let finalSlot = "fed30fe70143b53ff40aad6bcc72b470f657073997bfb6d364f2956247948d73" ;
   let formattedAddress = ethers.utils.hexZeroPad(walletAddress, 32);
   walletAddressBytes32.push(formattedAddress);  
  

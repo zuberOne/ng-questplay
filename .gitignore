@@ -7,7 +7,7 @@ cache
 .env
 .cache/*.jwt
 .settings
-
+campaigns/understanding-storage/storage-layout/.env
 artifacts
 cache
 
