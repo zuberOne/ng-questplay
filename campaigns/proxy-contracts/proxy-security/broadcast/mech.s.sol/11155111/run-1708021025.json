@@ -1,0 +1,40 @@
+{
+  "transactions": [
+    {
+      "hash": "0xc1685c924508182d9d6d3a37f8449dcc906764b7a0de55493f324554378af604",
+      "transactionType": "CALL",
+      "contractName": null,
+      "contractAddress": "0x72B4A3ad20A506BD286f645bE9db8206A477Cb42",
+      "function": "upgrade()",
+      "arguments": [],
+      "transaction": {
+        "type": "0x02",
+        "from": "0x85b0ec57a96b8b1fc48bf70d1fb9a6b4bac5c0df",
+        "to": "0x72b4a3ad20a506bd286f645be9db8206a477cb42",
+        "gas": "0x2474c",
+        "value": "0x0",
+        "data": "0xd55ec697",
+        "nonce": "0x19",
+        "accessList": []
+      },
+      "additionalContracts": [
+        {
+          "transactionType": "CREATE",
+          "address": "0x8256dBe955d5ab4Ff34476D2DBE39c8678C85C9A",
+          "initCode": "0x608060405234801561001057600080fd5b5060f88061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063c350529414602d575b600080fd5b60336047565b604051603e919060a9565b60405180910390f35b600080600160009054906101000a900463ffffffff1663ffffffff1611606c57600080fd5b7f9ec0ab26a87872971f1055392518ec4bc9a519d9f0a6b30a1b8e8b679e231e26905090565b6000819050919050565b60a3816092565b82525050565b600060208201905060bc6000830184609c565b9291505056fea2646970667358221220baf29dc14af29db14e90afe543234b5ae89d002daf8a6ce7f138c0df9b87ff6a64736f6c63430008130033"
+        }
+      ],
+      "isFixedGasLimit": false
+    }
+  ],
+  "receipts": [],
+  "libraries": [],
+  "pending": [
+    "0xc1685c924508182d9d6d3a37f8449dcc906764b7a0de55493f324554378af604"
+  ],
+  "returns": {},
+  "timestamp": 1708021025,
+  "chain": 11155111,
+  "multi": false,
+  "commit": "442417f"
+}
