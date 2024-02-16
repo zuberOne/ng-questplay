@@ -13,7 +13,7 @@ contract WriteWall is Script {
 
 
     // Input bandit camp address here
-    Temple constant TEMPLE = Temple(0x5B984A0E8bFEDEf2E7dEfA555Df56ac955BFfeEd);
+    Temple constant TEMPLE = Temple(0x1BaA53100f07AeAE15B735203734765Cfa244EfD);
 
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
@@ -25,9 +25,9 @@ contract WriteWall is Script {
         addressStorage.push(convertedAddress);
 
 
-        bytes32 slotNumberBytes = keccak256(abi.encode(22, keccak256(abi.encode(20, uint256(2)))));
-        uint256 slotNumber = uint256(slotNumberBytes);
-        //uint256 slotNumber = 9;
+        //bytes32 slotNumberBytes = keccak256(abi.encode(22, keccak256(abi.encode(20, uint256(2)))));
+        //uint256 slotNumber = uint256(slotNumberBytes);
+        uint256 slotNumber = 9;
 
         vm.startBroadcast(deployerPrivateKey);
 
