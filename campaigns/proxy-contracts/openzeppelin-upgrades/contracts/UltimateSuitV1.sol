@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 
-contract UltimateSuitV1 is ERC721 {
+contract UltimateSuitV1 is ERC721Upgradeable {
 
     // DO NOT REMOVE
     enum Status {
@@ -29,12 +29,14 @@ contract UltimateSuitV1 is ERC721 {
         require(_address == pilotA || _address == pilotB, "Not a pilot");
         _; 
     }
-    
-    constructor() ERC721("Ultimate Suit", "SUIT") {}
 
-    function initialize(address _pilotA, address _pilotB) external {
+    function initialize(address _pilotA, address _pilotB) external initializer {
+
         pilotA = _pilotA;
         pilotB = _pilotB;
+
+        __ERC721_init("Ultimate Suit", "SUIT") ;
+
     }
 
     function createBomb(
