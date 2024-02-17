@@ -14,7 +14,9 @@ contract SafeMath {
         // Convert this to assembly
         assembly {
             result := add(lhs,rhs)
+            if eq(lhs, 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ) {revert(0,0)}
             if sgt(result,0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF) {revert(0,0)}
+      
             if slt(result,0x8000000000000000000000000000000000000000000000000000000000000000) {revert(0,0)}
         }
     }
@@ -38,6 +40,8 @@ contract SafeMath {
         // Convert this to assembly
         assembly {
             result := mul(lhs,rhs)
+            if eq(lhs, 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ) {revert(0,0)}
+            if eq(rhs, 0x8000000000000000000000000000000000000000000000000000000000000000 ) {revert(0,0)}
             if sgt(result,0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF) {revert(0,0)}
             if slt(result,0x8000000000000000000000000000000000000000000000000000000000000000) {revert(0,0)}
         }
@@ -50,6 +54,7 @@ contract SafeMath {
         assembly {
             result := sdiv(lhs,rhs)
            // if or(lt(lhs,under),gt(result,sub(exp(2,256), 1))) {revert(0,0)}
+            if eq(lhs, 0x8000000000000000000000000000000000000000000000000000000000000000 ) {revert(0,0)}
             if sgt(result,0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF) {revert(0,0)}
             if slt(result,0x8000000000000000000000000000000000000000000000000000000000000000) {revert(0,0)}           
         }
