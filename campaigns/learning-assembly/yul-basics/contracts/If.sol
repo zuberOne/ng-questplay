@@ -12,8 +12,11 @@ contract If {
         pure
         returns (uint256 _hours)
     {
-        assembly {
-
-        }
+        assembly {  
+           if slt(_minutes, 0) {revert(0,0)}
+           if iszero(eq(mod(_minutes, 60), 0)) {revert(0,0)}
+            _hours := div(_minutes, 60)
+           }
     }
+    
 }
