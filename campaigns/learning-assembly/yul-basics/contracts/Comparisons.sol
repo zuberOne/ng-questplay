@@ -53,10 +53,9 @@ contract Comparisons {
         int256 upper
     ) public pure returns (bool inRange) {
         assembly {
-            let x := 0
             if and(
-                or(gt(value, lower),eq(value, lower)),
-                or(lt(value, upper),eq(value, upper))
+                or(sgt(value, lower),eq(value, lower)),
+                or(slt(value, upper),eq(value, upper))
                 ) 
                 {inRange := true }
 
