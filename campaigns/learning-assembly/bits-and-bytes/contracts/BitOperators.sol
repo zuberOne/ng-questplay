@@ -10,7 +10,7 @@ contract BitOperators {
         returns (uint256 rvalue)
     {
         assembly {
-
+            rvalue := shl(shift, x)
         }
     }
 
@@ -22,7 +22,7 @@ contract BitOperators {
         returns (uint256 rvalue)
     {
         assembly {
-            
+            rvalue := or(x, shl(index, 1))
         }
     }
 
@@ -34,7 +34,7 @@ contract BitOperators {
         returns (uint256 rvalue)
     {
         assembly {
-            
+            rvalue := and(x, not(shl(index, 1)))
         }
     }
 
@@ -46,7 +46,7 @@ contract BitOperators {
         returns (uint256 rvalue)
     {
         assembly {
-            
+            rvalue := xor(x, shl(index, 1))
         }
     }
 
@@ -58,7 +58,24 @@ contract BitOperators {
         returns (uint256 rvalue)
     {
         assembly {
+
+            switch x 
+            case 0 {
+                rvalue := 0
+            }
+            default {
+                switch index
+                case 0 {
+                    //let bitmap := or(0, shl(0, 1))
+                    rvalue := gt(and(x, 1), 0)
+                }
+
+                default {
+                    rvalue := gt(and(x, shl(index, 1)), 0)
+            }
             
+            }
+
         }
     }
 }
