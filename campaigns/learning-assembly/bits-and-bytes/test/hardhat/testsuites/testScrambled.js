@@ -14,6 +14,7 @@ function testScrambled(subsuiteName, input) {
 
     it("Should recoverAddress()", async function () {
       const result = await scrambledContract.recoverAddress(input.scrambled);
+      console.log(result.toString(16));
       expect(result).to.equal(input.unscrambled);
     });
   });
