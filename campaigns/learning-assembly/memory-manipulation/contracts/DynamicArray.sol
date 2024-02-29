@@ -12,6 +12,37 @@ contract DynamicArray {
     ) public pure returns (uint256[] memory array_) {
         assembly {
 
+            // read free meme index
+            let freeMemIndex := mload(0x40)
+
+            // read array length
+            let arrayLength := mload(array)
+            // set index to read values
+            let arrayIndex := add(array, 0x20)
+            // add one position - push
+            let newArrayLength := add(arrayLength, 1)
+            // set new array 
+            array_ := freeMemIndex
+            // store the new lenght
+            mstore(array_, newArrayLength)
+            // increment index
+            freeMemIndex := add(freeMemIndex, 0x20)
+            // read and store
+            for {let i := 0} lt(i, arrayLength) {i := add(i,1)} {
+                
+                mstore(freeMemIndex,mload(arrayIndex))
+
+                freeMemIndex := add(freeMemIndex, 0x20)
+
+                arrayIndex := add(arrayIndex, 0x20)
+
+            }
+
+            mstore(freeMemIndex, value)
+
+            mstore(0x40, add(freeMemIndex, 0x20))
+
+
         }
     }
 
@@ -24,7 +55,16 @@ contract DynamicArray {
     {
         assembly {
 
-        }
+
+            let arrayLength := mload(array)
+                        
+            if lt(arrayLength,1) { revert (0,0)}
+
+            mstore(array, sub(arrayLength,1))
+
+            array_ := array
+
+    }
     }
 
     /// @notice Pops the `index`th element from a memory array.
@@ -34,8 +74,31 @@ contract DynamicArray {
         pure 
         returns (uint256[] memory array_) 
     {
+
         assembly {
             
+            let arrayLength := mload(array)
+
+            if or(lt(index, 0),gt(index, sub(arrayLength,1))) { revert(0,0)}
+
+            let arrayIndex := add(add(array,0x20), mul(0x20, index))
+
+            let newArrayLength := sub(arrayLength, 1)
+
+            array_ := array
+
+            mstore(array_, newArrayLength)
+
+
+            for {let i := 0} lt(i, sub(arrayLength, index)) {i := add(i,1)} {
+                
+                mstore(arrayIndex,mload(add(arrayIndex,0x20)))
+
+                arrayIndex := add(arrayIndex, 0x20)
+
+
+            }            
+          
         }
     }
 
