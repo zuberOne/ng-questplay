@@ -36,8 +36,8 @@ contract WhispersV2 {
                 // ugly i know
                 valueToAdd := and(shr(sub(256,mul(8,valueLength)),shl(8,callData)),0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
                 if eq(valueLength,32)  {
-                    callDataIndex := add(callDataIndex,0x01)
-                    valueToAdd := calldataload(callDataIndex)
+                    //callDataIndex := add(callDataIndex,0x01)
+                    valueToAdd := 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
                     }
                 
                 callDataIndex := add(add(callDataIndex,0x01), mul(0x01,valueLength)) 
