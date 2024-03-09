@@ -14,8 +14,32 @@ abstract contract Challenge {
         pure 
         returns (bytes memory copy) 
     {
+        assembly {
+            
+            let fmp := mload(0x40)
 
-         // IMPLEMENT THIS FUNCTION
+            copy := fmp
+
+            let arrayLength := mload(array)
+            let totalLength := add(arrayLength,0x20)
+
+            
+            mstore(fmp, arrayLength)
+
+            fmp := add(fmp, 0x20)
+
+            let arrayIndex := add(array, 0x20)
+
+            for {let i := 0} lt(i,arrayLength) {i := add(i,1)} {
+                mstore(fmp, mload(arrayIndex))
+                fmp := add(fmp,0x20)
+                arrayIndex := add(arrayIndex,0x20)
+            }
+
+            mstore(0x40,fmp)
+        }
+         
 
     }
+    
 }
