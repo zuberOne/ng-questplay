@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
-import "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
+import "./VRFCoordinatorV2Interface.sol";
+import "./VRFConsumerBaseV2.sol";
 
 contract WizardTower is VRFConsumerBaseV2 {
 

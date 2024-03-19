@@ -13,7 +13,8 @@ contract commitPrediction is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        ELDERSHADELING.commitPrediction(0x0000000000000000000000000000000000000000000000000000000000000000);
+      //  ELDERSHADELING.commitPrediction(0x0000000000000000000000000000000000000000000000000000000000000000);
+        ELDERSHADELING.checkPrediction();
 
         vm.stopBroadcast();
     }
