@@ -7,7 +7,7 @@ import "../contracts_/Shadeling.sol";
 contract predictTrue is Script {
 
     // Input bandit camp address here
-    Shadeling constant SHADELING = Shadeling(0x50DD8869BcA4EF808F712B07E94EfEF99AB20CA9);
+    ShadelingHack constant SHADELING = ShadelingHack(0x0d7B4CA30D19B1B3062Ee251A5081f7B5a47481d);
 
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
