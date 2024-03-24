@@ -2,7 +2,10 @@
 struct Sorcerer {
     attack: u8,
     health: u8,
-    talent: Talent
+    talent: Talent,
+    hasBeenDamaged: bool,
+    isAlive: bool
+
 }
 
 // For Part 2...
@@ -21,7 +24,9 @@ impl SorcererImpl of SorcererTrait {
         Sorcerer {
             attack: attack,
             health: health,
-            talent: Talent::Talentless(())
+            talent: Talent::Talentless(()),
+            hasBeenDamaged: false,
+            isAlive: true
         }
     }
 
@@ -30,7 +35,9 @@ impl SorcererImpl of SorcererTrait {
         Sorcerer {
             attack: attack,
             health: health,
-            talent: talent
+            talent: talent,
+            hasBeenDamaged: false,
+            isAlive: true
         }
     }
 
@@ -39,3 +46,4 @@ impl SorcererImpl of SorcererTrait {
     fn is_defeated(self: @Sorcerer) -> bool { *self.health == 0_u8 }
 
 }
+
