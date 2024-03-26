@@ -1,14 +1,19 @@
+use core::array::ArrayTrait;
 use core::box::BoxTrait;
 use core::option::OptionTrait;
 use src::sorcerer::Sorcerer;
 
 fn battle(
     ref team1: Array<Sorcerer>, 
-    ref team2: Array<Sorcerer>
+    ref team2: Array<Sorcerer>,
+    ref finalTeam1: Array<Sorcerer>,
+    ref finalTeam2: Array<Sorcerer>
+
 ) {
 
     let mut indexTeam1 = 0;
     let mut indexTeam2 = 0;
+            
 
     
     loop {
@@ -18,7 +23,12 @@ fn battle(
 
     match team1.get(indexTeam1) {
         Option::None => {
-            ref team1 = 
+            while indexTeam2 < team2.len() {
+            finalTeam2.append(getSorcerer(ref team2,indexTeam2));
+            indexTeam2 = indexTeam2 + 1;
+            };
+            let team2 = finalTeam2;
+            let team1 = finalTeam1;
             break;
         },
         Option::Some => {
@@ -28,6 +38,12 @@ fn battle(
 
         match team2.get(indexTeam2) {
         Option::None => {
+            while indexTeam1 < team1.len() {
+            finalTeam1.append(getSorcerer(ref team1,indexTeam1));
+            indexTeam1 = indexTeam1 + 1;
+            };
+            let team2 = finalTeam2;
+            let team1 = finalTeam1;
             break;
         },
         Option::Some => {
