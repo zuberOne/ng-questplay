@@ -2,81 +2,79 @@ use core::array::ArrayTrait;
 use core::box::BoxTrait;
 use core::option::OptionTrait;
 use src::sorcerer::Sorcerer;
+use src::sorcerer_duel::duel;
 
 fn battle(
     ref team1: Array<Sorcerer>, 
     ref team2: Array<Sorcerer>,
-    ref finalTeam1: Array<Sorcerer>,
-    ref finalTeam2: Array<Sorcerer>
 
 ) {
 
     let mut indexTeam1 = 0;
     let mut indexTeam2 = 0;
-            
-
     
+    let mut sorcerer1 = getSorcerer(ref team1, ref indexTeam1);
+    let mut sorcerer2 = getSorcerer(ref team2, ref indexTeam2);
+
+
     loop {
 
-    let mut fighter1 = getSorcerer(ref team1, indexTeam1);
-    let mut fighter2 = getSorcerer(ref team2, indexTeam2);
 
-    match team1.get(indexTeam1) {
-        Option::None => {
-            while indexTeam2 < team2.len() {
-            finalTeam2.append(getSorcerer(ref team2,indexTeam2));
-            indexTeam2 = indexTeam2 + 1;
-            };
-            let team2 = finalTeam2;
-            let team1 = finalTeam1;
-            break;
-        },
-        Option::Some => {
-            
-        },
-    }
-
-        match team2.get(indexTeam2) {
-        Option::None => {
-            while indexTeam1 < team1.len() {
-            finalTeam1.append(getSorcerer(ref team1,indexTeam1));
+        duel(ref sorcerer1, ref sorcerer2);
+        
+        if sorcerer1.health == 0 {
             indexTeam1 = indexTeam1 + 1;
-            };
-            let team2 = finalTeam2;
-            let team1 = finalTeam1;
-            break;
-        },
-        Option::Some => {
+            if indexTeam1 != team1.len() {
+            sorcerer1 = getSorcerer(ref team1, ref indexTeam1)
+         }
+        }
+
+        if sorcerer2.health == 0 {
+            indexTeam2 = indexTeam2 + 1;
+            if indexTeam2 != team2.len() {
+             sorcerer2 = getSorcerer(ref team2, ref indexTeam2)
+            }
+        }
+
+        /// finish team1
+            if (indexTeam1 == team1.len() && indexTeam2 != team2.len()){
+                let mut finalWinTeam2 = ArrayTrait::new();
+                finish(ref team2, ref finalWinTeam2, ref indexTeam2, ref sorcerer2);
+                team2 = finalWinTeam2;
+                team1 = ArrayTrait::new();
+                break;            
+                 }
+
+         ////finish team 2
+
+            if (indexTeam2 == team2.len() && indexTeam1 != team1.len()){
+                let mut finalWinTeam1 = ArrayTrait::new();
+                finish(ref team1, ref finalWinTeam1, ref indexTeam1, ref sorcerer1);
+                team1 = finalWinTeam1;
+                team2 = ArrayTrait::new();
+                break;            
+        }   
+
+            if (indexTeam2 == team2.len() && indexTeam1 == team1.len()) {
+                team1 = ArrayTrait::new();
+                team2 = ArrayTrait::new();
+                break;
+            }
+     }
+}
+
+fn finish( ref team:Array<Sorcerer>, ref finalTeam:Array<Sorcerer>, ref index: u32,  ref sorcerer: Sorcerer ) {
             
-        },
-    }
+            finalTeam.append(sorcerer);
+            index = index + 1;
+            while index < team.len() {
+                finalTeam.append(getSorcerer(ref team, ref index));
+                index = index + 1;
 
-    while fighter1.health > 0 && fighter2.health > 0   {
-        fight(ref fighter1, ref fighter2);
-        fight(ref fighter2, ref fighter1);
-        };
-
-        if fighter1.health == 0 {
-            indexTeam1 = indexTeam1 +1
-        }
-
-        if fighter2.health == 0 {
-            indexTeam2 = indexTeam2 +1
-        }
-    }
-    // IMPLEMENT THIS FUNCTION
+            };
 }
 
-
-fn fight (ref sorcerer1: Sorcerer, ref sorcerer2: Sorcerer) {
-     if (sorcerer1.health <= sorcerer2.attack ) {      
-            sorcerer1.health = 0;
-        } else {
-           sorcerer1.health = sorcerer1.health - sorcerer2.attack;
-        }
-    
-}
-
-fn getSorcerer( ref fromTeam: Array<Sorcerer>, index: u32) -> Sorcerer {
+fn getSorcerer( ref fromTeam: Array<Sorcerer>, ref index: u32) -> Sorcerer {
     *fromTeam.get(index).unwrap().unbox()
-}
+}    
+

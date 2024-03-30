@@ -1,3 +1,5 @@
+use core::fmt::{Display, Formatter, Error};
+
 #[derive(Copy, Drop)]
 struct Sorcerer {
     attack: u8,
@@ -7,6 +9,15 @@ struct Sorcerer {
     isAlive: bool
 
 }
+
+impl SorcererDisplay of Display<Sorcerer> {
+    fn fmt(self: @Sorcerer, ref f: Formatter) -> Result<(), Error> {
+        let str: ByteArray = format!("Sorcerer ({}, {})", *self.attack, *self.health);
+        f.buffer.append(@str);
+        Result::Ok(())
+    }
+}
+
 
 // For Part 2...
 #[derive(Copy, Drop)]
