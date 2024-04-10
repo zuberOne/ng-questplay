@@ -1,3 +1,6 @@
+use core::traits::TryInto;
+use core::traits::Into;
+use core::array::SpanTrait;
 use src::pyramid::searchChamber;
 use core::box::BoxTrait;
 use array::ArrayTrait;
@@ -157,7 +160,129 @@ impl PyramidSearchImpl<
     impl TPartialEq: PartialEq<T>
 > of PyramidSearchTrait<T> {
     fn search(self: @Pyramid<T>, key: T) -> Option<Array<T>> {
-        // IMPLEMENT THIS FUNCTION
-        Option::None
+        // IMPLEMENT THIS FUNCTIO
+        // piramid span
+        
+        let mut pirSpan = self.chambers.span();
+
+        let pirLen = self.chambers.len();
+
+        let mut reversedMap : Array<T> = array![];
+
+        let mut finalMap : Option<Array> = Option::None;
+
+        let mut almostFinalMap: Array<T> = array![];
+
+        let mut mapExists = false ;
+
+        let mut noKey = true ;
+
+        let mut index = 0;
+
+        loop {
+              
+            
+            // array iteration
+            match pirSpan.pop_front() {
+      
+                Option::Some(v) => {
+                    // find the key
+                    if v.item == @key {
+                        // original len - len of popped array - 1 cause array starts at 0 duh
+                        index = pirLen - pirSpan.len() - 1;
+                        println!("{}", index);
+                        // save the key to array
+                        reversedMap.append(v.item.clone());
+                        // found key so no break
+                        noKey = false;
+                    }
+                },
+                // array ends
+                Option::None(_) => {
+                    break;
+                }
+             };     
+        };
+        // reload the piramid
+        let mut pirSpan = self.chambers.span();
+
+        loop {      
+            // if nokey skip
+            if noKey { break; }
+           // array iteration
+            match pirSpan.pop_front() {
+                Option::Some(v) => { 
+                    // check lower chambers
+                    match v.lower_chambers {
+                        Option::Some(chambersTuple) => {
+                           let (left,right) = *chambersTuple;
+                           
+                           if left == index || right == index {
+                                // save the key
+                                
+                                reversedMap.append(v.item.clone());
+                                // set index to look for
+                                index = pirLen - pirSpan.len() - 1; 
+                                println!("{}", index);
+                                // reload the piramid
+                                pirSpan = self.chambers.span();
+                                // if got to top end
+                                if index == *self.top {
+                                     mapExists = true;
+                                      println!("exit loop");
+                                       break;
+                                 }   
+                                  
+                           }
+
+                        },
+                        Option::None => {
+                            // just basement
+                        }
+                    
+                    }; // end inner match
+
+                },
+                // array ends
+                Option::None(_) => {
+                    // no route to top
+                    break;
+
+                    
+ 
+                }
+             };             
+
+
+         }; // end loop
+            
+        if mapExists {
+
+            loop {
+              
+            // array iteration
+                match reversedMap.pop_front() {
+      
+                    Option::Some(v) => {
+                        almostFinalMap.append(v.clone());
+
+                       
+                },
+                // array ends
+                    Option::None(_) => {
+                    break;
+                }
+             };  
+
+            
+            
+        };
+            let finallen = almostFinalMap.len();
+            println!("{}", finallen);
+            finalMap = Option::Some(almostFinalMap);
+        }
+
+        finalMap
+            
     }
-}
+} 
