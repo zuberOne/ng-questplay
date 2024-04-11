@@ -29,7 +29,6 @@ fn assert_array<T, impl TPartialEq: PartialEq<T>, impl TDrop: Drop<T>>(
 
         let actual_item = actual.pop_front().unwrap();
         let expected_item = expected.pop_front().unwrap();
-
         assert(
             actual_item == expected_item, 
             'Unexpected item'

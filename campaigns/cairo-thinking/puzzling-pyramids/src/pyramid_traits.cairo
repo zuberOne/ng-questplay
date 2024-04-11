@@ -167,11 +167,11 @@ impl PyramidSearchImpl<
 
         let pirLen = self.chambers.len();
 
-        let mut reversedMap : Array<T> = array![];
+        let mut reversedMap = ArrayTrait::new();
 
         let mut finalMap : Option<Array> = Option::None;
 
-        let mut almostFinalMap: Array<T> = array![];
+        let mut almostFinalMap = ArrayTrait::new();
 
         let mut mapExists = false ;
 
@@ -190,7 +190,6 @@ impl PyramidSearchImpl<
                     if v.item == @key {
                         // original len - len of popped array - 1 cause array starts at 0 duh
                         index = pirLen - pirSpan.len() - 1;
-                        println!("{}", index);
                         // save the key to array
                         reversedMap.append(v.item.clone());
                         // found key so no break
@@ -217,19 +216,18 @@ impl PyramidSearchImpl<
                         Option::Some(chambersTuple) => {
                            let (left,right) = *chambersTuple;
                            
+                           
                            if left == index || right == index {
-                                // save the key
-                                
+                                // save the key                 
                                 reversedMap.append(v.item.clone());
                                 // set index to look for
                                 index = pirLen - pirSpan.len() - 1; 
-                                println!("{}", index);
                                 // reload the piramid
                                 pirSpan = self.chambers.span();
                                 // if got to top end
                                 if index == *self.top {
                                      mapExists = true;
-                                      println!("exit loop");
+                                  //    println!("exit loop");
                                        break;
                                  }   
                                   
@@ -257,16 +255,16 @@ impl PyramidSearchImpl<
          }; // end loop
             
         if mapExists {
+            // into span to allow pop_back
+            let mut revSpan = reversedMap.span();
 
             loop {
               
             // array iteration
-                match reversedMap.pop_front() {
+                match revSpan.pop_back() {
       
                     Option::Some(v) => {
-                        almostFinalMap.append(v.clone());
-
-                       
+                        almostFinalMap.append(v.clone());               
                 },
                 // array ends
                     Option::None(_) => {
@@ -277,8 +275,6 @@ impl PyramidSearchImpl<
             
             
         };
-            let finallen = almostFinalMap.len();
-            println!("{}", finallen);
             finalMap = Option::Some(almostFinalMap);
         }
 
