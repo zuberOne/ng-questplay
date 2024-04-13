@@ -168,7 +168,7 @@ impl PyramidSearchImpl<
 
         let mut almostFinalMap = ArrayTrait::new();
 
-        let mut mapExists = false ;
+
 
         let mut noKey = true ;
 
@@ -221,7 +221,7 @@ impl PyramidSearchImpl<
                                 pirSpan = self.chambers.span();
                                 // if got to top end
                                 if index == *self.top {
-                                     mapExists = true;
+                                  
                                   //    println!("exit loop");
                                        break;
                                  }   
@@ -249,7 +249,7 @@ impl PyramidSearchImpl<
 
          }; // end loop
             
-        if mapExists {
+
             // into span to allow pop_back
             let mut revSpan = reversedMap.span();
 
@@ -271,7 +271,7 @@ impl PyramidSearchImpl<
             
         };
             finalMap = Option::Some(almostFinalMap);
-        }
+
 
         finalMap
             
