@@ -27,7 +27,6 @@ impl PyramidIntoArray<
 
             // i was everywhere so lets finish
             if pirArray.len() == self.chambers.len() {
-
                 break;
                 
             }                
@@ -160,7 +159,7 @@ impl PyramidSearchImpl<
         
         let mut pirSpan = self.chambers.span();
 
-       // let pirLen = self.chambers.len();
+        let pirLen = self.chambers.len();
 
         let mut reversedMap = ArrayTrait::new();
 
@@ -174,8 +173,6 @@ impl PyramidSearchImpl<
 
         let mut index = 0;
 
-        let pirLen = self.chambers.len();
-
         loop {
               
             
@@ -185,12 +182,10 @@ impl PyramidSearchImpl<
                 Option::Some(v) => {
                     // find the key
                     if v.item == @key {
-                        
                         // original len - len of popped array - 1 cause array starts at 0 duh
                         index = pirLen - pirSpan.len() - 1;
                         // save the key to array
                         reversedMap.append(v.item.clone());
-                        // println!("found key in {} ", index);
                         // found key so no break
                         noKey = false;
                         break;
@@ -200,21 +195,17 @@ impl PyramidSearchImpl<
                 Option::None(_) => {
                     break;
                 }
-                
-             }; 
-          //   index += 1;    
+             };     
         };
         // reload the piramid
         let mut pirSpan = self.chambers.span();
-
-
+        if !noKey {  
         loop {      
             // if nokey skip
-            if noKey { break; }
+
            // array iteration
             match pirSpan.pop_front() {
                 Option::Some(v) => { 
-                    
                     // check lower chambers
                     match v.lower_chambers {
                         Option::Some(chambersTuple) => {
@@ -224,16 +215,14 @@ impl PyramidSearchImpl<
                            if left == index || right == index {
                                 // save the key                 
                                 reversedMap.append(v.item.clone());
-                                   println!("found item in {} ", index);
                                 // set index to look for
-                               index = pirLen - pirSpan.len() - 1; 
+                                index = pirLen - pirSpan.len() - 1; 
                                 // reload the piramid
                                 pirSpan = self.chambers.span();
-
                                 // if got to top end
                                 if index == *self.top {
                                      mapExists = true;
-                                  
+                                  //    println!("exit loop");
                                        break;
                                  }   
                                   
@@ -245,20 +234,17 @@ impl PyramidSearchImpl<
                         }
                     
                     }; // end inner match
-                
+
                 },
                 // array ends
                 Option::None(_) => {
                     // no route to top
                     break;
-
-                    
- 
                 }
              };             
-           // index += 1;
-           //  println!("looking for item in {} ", index);
 
+
+             };
          }; // end loop
             
         if mapExists {
