@@ -6,17 +6,17 @@ use src::obstacle::Obstacle;
 
 fn find_crocodiles(river: @Array<Obstacle>) -> Array<usize> {
     // IMPLEMENT THIS FUNCTION
-    let mut crocodiles:Array<usize> = ArrayTrait::new();
+    let mut crocodiles = ArrayTrait::new();
 
     let mut spanRiverOuter = river.span();
     let mut outerIndex = 0;
-    
+    let mut isCrocodile = false;
 
     /// dodaj indexy jak jest duplikat, jeśli ten indeks jest w array to skip
 
 
         loop {      
-            let mut isCrocodile = false;
+           
            // let mut spanRiverInner = river.clone();
             let mut spanCrocodiles = crocodiles.span();
             let mut hasBeenAdded = false;
@@ -24,10 +24,11 @@ fn find_crocodiles(river: @Array<Obstacle>) -> Array<usize> {
 
            // array iteration
             //println!("outer loop, looking for duplicate of outer index {}", outerIndex);0
+           // if crocodiles.len() > 0 {
             match spanRiverOuter.pop_front() {
                 Option::Some(v) => { 
                     
-                    loop { 
+                   loop { 
                  //   println!("check if index has been already added {}", outerIndex);
                     match spanCrocodiles.pop_front() {
                         Option::Some(z) => { 
@@ -43,12 +44,12 @@ fn find_crocodiles(river: @Array<Obstacle>) -> Array<usize> {
                             break;
                         }
                     };    
-                    };   //end loop  
+                    };    //end loop  
                     
                 if !hasBeenAdded {
                         let mut innerIndex = outerIndex + 1;
                         let mut spanRiverInner = spanRiverOuter;
-
+                        
                     loop {
 
       
@@ -63,7 +64,7 @@ fn find_crocodiles(river: @Array<Obstacle>) -> Array<usize> {
                                 v.description == x.description {
 
                         //        println!("found crocodiles at {}, adding to array", innerIndex);
-                                if !isCrocodile { isCrocodile = true; }
+                                isCrocodile = true; 
                                 crocodiles.append(innerIndex); 
 
                                 }
@@ -72,18 +73,16 @@ fn find_crocodiles(river: @Array<Obstacle>) -> Array<usize> {
                             // array ends
                             Option::None(_) => {
                                 if isCrocodile {
-
                                     crocodiles.append(outerIndex);
                                   //  println!("add original crocodiles at {}", outerIndex);
-                                    
+                                    isCrocodile = false;
                                     };
+                                    
                              break;
                             }
                       
                     }; 
-                       // } else {
-                           // spanRiverInner.pop_front().unwrap();
-                         //   }
+
                       innerIndex += 1;
                     }     
                 } //if has been added   
@@ -99,7 +98,7 @@ fn find_crocodiles(river: @Array<Obstacle>) -> Array<usize> {
 
 
              }; // end loop
-            //println!("croc len: {}", crocodiles.len());
+
 
              crocodiles
          } // end   fn
