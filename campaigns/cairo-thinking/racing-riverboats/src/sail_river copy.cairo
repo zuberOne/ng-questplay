@@ -1,4 +1,3 @@
-use core::box::BoxTrait;
 use core::clone::Clone;
 use core::option::OptionTrait;
 use core::array::SpanTrait;
@@ -19,7 +18,6 @@ fn sail_river(obstacles: Array<Obstacle>) -> Option<usize> {
     let mut y:usize = 0;
     let mut high = 0;
     let mut noRoute = false;
-    let mut x = 0;
 
 // sort
     
@@ -95,63 +93,91 @@ fn sail_river(obstacles: Array<Obstacle>) -> Option<usize> {
 
 
     /// sail    - to to sie wywala
-    while  x < sortedCrocs.len()  {
+        loop {
+            let mut jumped = false;
+            match sortedCrocs.pop_front() {
+                Option::Some(first) => {
+                    if first == index { println!("no route"); noRoute = true; break; };
+                    numberOfJumps += 1;
+                    println!("croc pop {} at i am standing at index {}", first, index );
+                    // take care of crocs out of jump range
+                    if first > index + 3 {
+                        println!("crocs out of range , jumping 3");
 
-            let mut first = sortedCrocs.get(x).unwrap().unbox();
-            let mut second = sortedCrocs.get(x + 1).unwrap().unbox();
-            let mut third = sortedCrocs.get(x + 2).unwrap().unbox();
+                        index += 3;
+                        jumped = true
+                    } else {
 
-            if *first > index + 3 {
-                numberOfJumps += 1;
-                index + 3;
+                    if first == index + 3 {
+
+                        index += 2;
+                        println!("jumping 2");
+                        jumped = true;
+                        
                 
+                    }                         
+                        
+                  if !jumped {
+                    let mut second = sortedCrocs.pop_front().unwrap();
+                    loop {
+                        
+
+                        println!("first {}, second {}", first, second );
+
+                        if second > index + 3 {
+                            println!("inner crocs out of range , jumping 3");
+
+                            index += 3;         
+                            break;                       
+                        }
+
+                        let mut calc = second - index + first - index;
+
+                        println!("equals  {}", calc );
+
+
+                        if calc == 5 {
+
+                            index += 1;
+                            println!("jumping 1");
+                            break;
+                        }
+
+                        if calc == 3 {
+                            
+                            index += 3;
+                            println!("jumping 2");
+                            break;
+                        }
+
+
+                        if calc == 4 {
+                            
+                            index += 2;
+                            println!("jumping 2");
+                            break;
+                        }                        
+                        
+                        break;
+                                                     
+                    };
+                } // end if not jumped
+                    }
+                    
+                },
+
+                Option::None(_) => {
+                    while index < obstacles.len() {
+                        println!("no crocs left. jumping 3 {}", index);
+                        println!("obst len {}", obstacles.len());
+                        
+                        index += 3;
+                        numberOfJumps += 1;
+                        println!(" number of jumps {}",numberOfJumps );
+                    };
+                    break;
+                }
             }
-
-            if *first + *second  == 1 && 3 != 2 {
-                numberOfJumps += 1;
-                index + 3;
-                x += 2;
-                
-            }
-
-            if *first + *second  == 2 {
-                numberOfJumps += 1;
-                index + 2;
-                x += 1;
-                
-            }            
-
-            if *first - index + *second - index + *third - index == 6 {
-                println!("noroute " );
-                noRoute = true;
-                break;
-            }
-
-            if *first - index + *second - index == 5 {
-                index += 1;
-                numberOfJumps += 1;
-                
-                
-            }
-
-            if *first - index + *second - index  == 3 {
-                index += 3;
-                numberOfJumps += 1;
-                x += 2;
-                
-            }
-
-            if *first - index + *second - index  == 4 {
-                index += 2;
-                numberOfJumps += 1;
-                x += 1;
-                
-            }            
-
-
-            
-            
-    
         };
 
     if noRoute { return Option::<usize>::None; };
